@@ -46,8 +46,6 @@ export const userGetByIDService = async (id:number):Promise<IUser>=>{
     return userFinded;
 } 
 
-
-
 export const createUserService = async (infoUser:UserDto):Promise<IUser> =>{
 
     const lastIndex:number = users[users.length - 1].id;
@@ -63,4 +61,12 @@ export const createUserService = async (infoUser:UserDto):Promise<IUser> =>{
 
     return newUser;
 
-}  
+}
+
+export const loginUserService = async(email:string, password:string):Promise<boolean> =>{
+    const existUser:IUser|undefined = users.find(user => user.email == email);
+    if(!existUser) throw new Error("Email o Password are incorrect");
+    if(existUser.password != password) throw new Error("Email o Password are incorrect");
+    
+    return true
+}
