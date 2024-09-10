@@ -1,8 +1,8 @@
 
 
-export default interface IUser {
-    id: number,
+export interface UserDto {
     name: string,
     email: string,
     password: string
-} 
+}
+
