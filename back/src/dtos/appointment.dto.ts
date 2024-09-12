@@ -1,4 +1,7 @@
 
 export interface AppoinmentDto {
-    date:Date
+    date:Date,
+    status: string,
+    time: number,
+    userId: number
 } 

@@ -2,5 +2,7 @@
 export interface IAppointment{
     id: number,
     date: Date,
-    state: string
+    time: number,
+    userId: number,
+    status: string
 } 

@@ -1,6 +1,7 @@
 import { Request, Response} from "express";
-import {createUserService, loginUserService, userGetAllService, userGetByIDService} from '../services/user.service'
+import {createUserService, userGetAllService, userGetByIDService} from '../services/user.service'
 import { UserDto } from "../dtos/user.dto";
+import { loginCredentialService } from "../services/credentials.service";
 
 export const userGetAll = async ( req:Request, res:Response) =>{
     try{
@@ -34,7 +35,7 @@ export const createUser = async (req:Request, res:Response)=>{
 export const loginUser = async (req: Request, res:Response)=>{
     try{
         const { password, email } = req.body;
-        await loginUserService(email, password);
+        await loginCredentialService(email, password);
         res.status(200).json({message: "User was loggin correctly"})
     }catch(error){
         console.log(error)

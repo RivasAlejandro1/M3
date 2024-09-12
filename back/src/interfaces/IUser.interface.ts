@@ -1,8 +1,10 @@
 
 
-export default interface IUser {
+export  interface IUser {
     id: number,
     name: string,
     email: string,
-    password: string
+    birthdate: Date,
+    nDni: number,
+    credentialId: number
 } 
