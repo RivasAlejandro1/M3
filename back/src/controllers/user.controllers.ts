@@ -2,6 +2,8 @@ import { Request, Response} from "express";
 import {createUserService, userGetAllService, userGetByIDService} from '../services/user.service'
 import { UserDto } from "../dtos/user.dto";
 import { loginCredentialService } from "../services/credentials.service";
+import { CredentialDto } from "../dtos/credential.dto";
+import { IUser } from "../interfaces/IUser.interface";
 
 export const userGetAll = async ( req:Request, res:Response) =>{
     try{
@@ -24,8 +26,9 @@ export const userGetByID = async (req:Request, res:Response)=>{
 
 export const createUser = async (req:Request, res:Response)=>{
     try{
-        const userInfo:UserDto = req.body;
-        const result = await createUserService(userInfo);
+        const userInfo:UserDto = req.body.userInfo;
+        const credentialInfo:CredentialDto = req.body.credentialInfo;
+        const result:IUser = await createUserService(userInfo, credentialInfo);
         res.status(201).json(result);
     }catch(error){
         res.status(404).json(error);
