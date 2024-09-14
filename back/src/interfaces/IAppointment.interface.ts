@@ -1,6 +1,6 @@
 
 export interface IAppointment{
-    id: number,
+    id: string,
     date: Date,
     time: number,
     userId: number,
