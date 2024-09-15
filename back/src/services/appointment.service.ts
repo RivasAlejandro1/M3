@@ -1,40 +1,26 @@
 import { AppoinmentDto } from "../dtos/appointment.dto";
-import { IAppointment } from "../interfaces/IAppointment.interface"
-
-const appointments:IAppointment[] = [
-    {
-        id: 1,
-        date: new Date("2000/04/02"),
-        status: "cancelled",
-        time: 1,
-        userId: 1
-         
-    },
-    {
-        id: 2,
-        date: new Date("2019/08/01"),
-        status: "active",
-        time: 1,
-        userId: 1   
-    },
-    
-]
+import { IAppointment } from "../interfaces/IAppointment.interface";
+import { AppDataSource } from "../config/appDataSource";
+import { Appointment } from "../entities/appointment.entity";
+import { User } from "../entities/User.entity";
 
 export const getAllAppointmentsService =  async():Promise<IAppointment[]>=>{
-    return appointments;
+    return  await AppDataSource.manager.find(Appointment);
 }
 
-export const getAppointmentByIDService =  async(id:number):Promise<IAppointment>=>{
-    const appointmentFinded:IAppointment|undefined = appointments.find(appointment => appointment.id == id)
+export const getAppointmentByIDService =  async(id:string):Promise<IAppointment>=>{
+    const appointmentFinded:Appointment| null = await AppDataSource.manager.findOneBy(Appointment, {id})
     if(!appointmentFinded) throw new Error(`The Appointment with id:${id} Not Found`)
     return appointmentFinded;
 }
 
 export const scheduleAppointmentService =  async(infoAppointment:AppoinmentDto):Promise<IAppointment>=>{
-    const appointmentIndex:number = appointments[appointments.length - 1].id; 
-    const newId:number = appointmentIndex +1;
     
-    const { date, time, userId } = infoAppointment;
+    const newAppointment:IAppointment = new Appointment();
+
+    
+    /* const appointmentIndex:number = appointments[appointments.length - 1].id; 
+    const newId:number = appointmentIndex +1;
     const newAppointment:IAppointment = {
         id: newId,
         date,
@@ -42,18 +28,40 @@ export const scheduleAppointmentService =  async(infoAppointment:AppoinmentDto):
         time,
         userId
     }
-
     appointments.push(newAppointment);
+     */
 
-    return newAppointment;
+
+    const { date, time, userId } = infoAppointment;
+    newAppointment.date = date;
+    newAppointment.status = "active";
+    newAppointment.time = time;
+    
+    const userFinded: User |null =  await AppDataSource
+        .manager
+        .findOneBy(User, {
+            id: userId
+        });
+    if(!userFinded) throw new Error("The User no exist");
+    newAppointment.userId = userFinded;
+
+    return await AppDataSource
+    .manager
+    .save(Appointment, newAppointment);
 }
 
-export const cancelAppointmentService =  async(id:number):Promise<IAppointment>=>{
-    const index:number|undefined = appointments.findIndex(appointment => appointment.id == id);
-    
-    if(!appointments[index]) throw new Error(`The Appointment with id:${id} Not Found`);
-    if(appointments[index].status == "cancelled") throw new Error(`The Appoinment was canceled`);
-    appointments[index].status = "cancelled";
-    return appointments[index];
+export const cancelAppointmentService =  async(id:string):Promise<IAppointment>=>{
+
+   
+    const appointmentFinded:Appointment|null = await AppDataSource.manager.findOneBy(Appointment,{
+        id
+    })
+    if(!appointmentFinded) throw new Error("The Appointment not exist");
+    if(appointmentFinded.status == "cancelled") throw new Error(`The Appoinment was canceled`);
+
+
+    await AppDataSource.manager.update(Appointment,appointmentFinded,{status: "cancelled"})
+    appointmentFinded.status = "cancelled";
+    return appointmentFinded; 
     
 }

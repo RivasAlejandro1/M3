@@ -1,11 +1,11 @@
-import { Column, Entity, ManyToOne } from "typeorm"
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm"
 import { User } from "./User.entity"
 
 @Entity({
     name: "appointments"
 })
 export class Appointment{
-    @Column("varchar")
+    @PrimaryGeneratedColumn()
     id: string
     @Column("date")
     date: Date
@@ -16,5 +16,5 @@ export class Appointment{
 
 
     @ManyToOne(()=> User, (user) => user.appointments)
-    userId: string
+    userId: User
 } 

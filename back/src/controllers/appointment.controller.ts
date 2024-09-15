@@ -15,7 +15,7 @@ export const getAllAppointments =  async(req:Request, res:Response)=>{
 export const getAppointmentByID =  async(req:Request, res:Response)=>{
     try{
         const { id } = req.params; 
-        const appointmentFinded:IAppointment = await getAppointmentByIDService(Number(id));
+        const appointmentFinded:IAppointment = await getAppointmentByIDService(id);
         res.status(200).json(appointmentFinded);
     }catch(error){
         res.status(404).json(error);
@@ -35,7 +35,7 @@ export const scheduleAppointment =  async(req:Request, res:Response)=>{
 
 export const cancelAppointment =  async(req:Request, res:Response)=>{
     try{
-        const result = await cancelAppointmentService(Number(req.params.id));
+        const result = await cancelAppointmentService(req.params.id);
         res.status(201).json(result);
     }catch(error){
         res.status(404).json(error);
