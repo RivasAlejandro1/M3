@@ -1,3 +1,4 @@
+import { Credential } from "../entities/Credential.entity";
 
 
 export  interface IUser {
@@ -6,5 +7,5 @@ export  interface IUser {
     email: string,
     birthdate: Date,
     nDni: number,
-    credentialId: number
+    credentialId: Credential
 } 

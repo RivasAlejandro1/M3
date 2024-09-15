@@ -17,7 +17,7 @@ export const userGetAll = async ( req:Request, res:Response) =>{
 
 export const userGetByID = async (req:Request, res:Response)=>{
     try{
-        const userFinded = await userGetByIDService(Number(req.params.id))
+        const userFinded = await userGetByIDService(req.params.id)
         res.status(200).json(userFinded)
     }catch(error){
         res.status(404).json(error)
