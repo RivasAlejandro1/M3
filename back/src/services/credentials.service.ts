@@ -1,36 +1,27 @@
+import { isAwaitKeyword } from 'typescript';
+import { AppDataSource } from '../config/appDataSource';
 import {CredentialDto} from '../dtos/credential.dto';
+import { Credential } from '../entities/Credential.entity';
 import {ICredential} from '../interfaces/ICredential.interface'
 
-const credentials: ICredential[] = [
-    {
-        id: 1,
-        username: "a",
-        password: "a"
-        
-    },
-    {
-        id: 2,
-        username: "p",
-        password: "p"
-        
-    },
-]
 
-export const  createCredentialService=  async (infoCredenital:CredenitalDto):Promise<number> =>{
+
+export const  createCredentialService=  async (infoCredenital:CredentialDto):Promise<ICredential> =>{
     const {password, username} = infoCredenital;
-    const newId: number = credentials[credentials.length-1].id +1;
-    const newCredential:ICredential = {
-        password,
-        username,
-        id: newId
-    };
-    credentials.push(newCredential)
 
-    return newId;
+    const newCredential = new Credential();
+    newCredential.password = password;
+    newCredential.username = username;
+    
+    
+    return await AppDataSource.manager.save(newCredential);
 }
 
-export const loginCredentialService = async(username:string, password:string):Promise<number> =>{
-    const existUsername:ICredential|undefined = credentials.find(credential => credential.username == username);
+export const loginCredentialService = async(username:string, password:string):Promise<string> =>{
+
+    const existUsername:ICredential|null = await AppDataSource.manager.findOneBy(Credential, {
+        username
+    }) 
     if(!existUsername) throw new Error("username o Password are incorrect");
     if(existUsername.password != password) throw new Error("username o Password are incorrect");
     
