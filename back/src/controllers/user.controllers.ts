@@ -10,8 +10,8 @@ export const userGetAll = async ( req:Request, res:Response) =>{
         const allUsers = await userGetAllService()
         res.status(200).send(allUsers)
     }
-    catch(error){
-        res.status(404).json({message: `Error: ${error}`})
+    catch(error:any){
+         res.status(404).json({Error: error?.message})
     }
 }
 
