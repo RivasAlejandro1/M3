@@ -21,16 +21,28 @@ export const userGetByIDService = async (id:string):Promise<IUser>=>{
     return userFinded;
 } 
 
-export const createUserService = async (infoUser:UserDto, infoCredential:CredentialDto):Promise<IUser> =>{
+export const createUserService = async (infoUser:UserDto):Promise<IUser> =>{
 
+    console.log(infoUser);
+    const {
+        name, 
+        email, 
+        birthdate, 
+        nDni, 
+        username, 
+        password
+    } = infoUser;
+    const infoCredential:CredentialDto = {
+        username, 
+        password
+    };
 
-    const {name, email, birthdate, nDni} = infoUser;
     const newCredential:ICredential = await createCredentialService(infoCredential);
     
     const newUser:IUser = new User();
     newUser.name = name;
     newUser.email = email;
-    newUser.birthdate = birthdate;
+    newUser.birthdate = new Date(birthdate);
     newUser.nDni = nDni;
     newUser.credentialId = newCredential;
 
@@ -38,10 +50,17 @@ export const createUserService = async (infoUser:UserDto, infoCredential:Credent
 
 }
 
-/* export const loginUserService = async(email:string, password:string):Promise<boolean> =>{
-    const existUser:IUser|undefined = users.find(user => user.email == email);
-    if(!existUser) throw new Error("Email o Password are incorrect");
-    if(existUser.password != password) throw new Error("Email o Password are incorrect");
+export const seederUserService = async (infoSeeder:UserDto[])=>{
     
-    return true
-} */
+    const existUsers:User[] = await AppDataSource.manager.find(User)
+    if(existUsers.length >= 10) return; 
+    await Promise.all(
+        infoSeeder
+        .map(
+            async (userinfo:UserDto)=>
+                {
+                    await createUserService(userinfo);
+                }
+        )
+    )
+}

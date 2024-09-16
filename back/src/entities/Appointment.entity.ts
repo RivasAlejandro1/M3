@@ -5,15 +5,14 @@ import { User } from "./User.entity"
     name: "appointments"
 })
 export class Appointment{
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn("uuid")
     id: string
     @Column("date")
     date: Date
-    @Column("int")
+    @Column("decimal")
     time: number
     @Column("varchar")
     status: string
-
 
     @ManyToOne(()=> User, (user) => user.appointments)
     userId: User

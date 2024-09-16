@@ -3,6 +3,9 @@ import { IAppointment } from "../interfaces/IAppointment.interface";
 import { AppDataSource } from "../config/appDataSource";
 import { Appointment } from "../entities/appointment.entity";
 import { User } from "../entities/User.entity";
+import { scheduleAppointment } from "../controllers/appointment.controller";
+import { userGetAllService } from "./user.service";
+import { IUser } from "../interfaces/IUser.interface";
 
 export const getAllAppointmentsService =  async():Promise<IAppointment[]>=>{
     return  await AppDataSource.manager.find(Appointment);
@@ -17,23 +20,8 @@ export const getAppointmentByIDService =  async(id:string):Promise<IAppointment>
 export const scheduleAppointmentService =  async(infoAppointment:AppoinmentDto):Promise<IAppointment>=>{
     
     const newAppointment:IAppointment = new Appointment();
-
-    
-    /* const appointmentIndex:number = appointments[appointments.length - 1].id; 
-    const newId:number = appointmentIndex +1;
-    const newAppointment:IAppointment = {
-        id: newId,
-        date,
-        status: "active",
-        time,
-        userId
-    }
-    appointments.push(newAppointment);
-     */
-
-
     const { date, time, userId } = infoAppointment;
-    newAppointment.date = date;
+    newAppointment.date = new Date(date);
     newAppointment.status = "active";
     newAppointment.time = time;
     
@@ -64,4 +52,29 @@ export const cancelAppointmentService =  async(id:string):Promise<IAppointment>=
     appointmentFinded.status = "cancelled";
     return appointmentFinded; 
     
+}
+
+export const seederAppointmentService = async (infoSeeder:any)=>{
+    
+     const allUsers:IUser[] =await userGetAllService()
+
+     const user1:IUser|undefined = allUsers.find(user => user.email = "ana.martinez@example.com" );
+     const user2:IUser|undefined = allUsers.find(user => user.email = "luis.perez@example.com" );
+     const user3:IUser|undefined = allUsers.find(user => user.email = "marta.gomez@example.com" );
+
+     if(!user1 || !user2 || !user3) throw new Error("The Users not exist")
+     let count =  0;
+     const existAppointment:IAppointment[] = await AppDataSource.manager.find(Appointment)
+     if(existAppointment.length >= 10) return; 
+     await Promise.all(
+        infoSeeder
+        .map(
+            async (appoinmentInfo:Omit<AppoinmentDto, "userId">)=>
+                {
+                    const currentUser:IUser|undefined = count == 0 ? user1 : count == 1 ? user2 : user3;
+                    const appointmentInfoReady:AppoinmentDto = {...appoinmentInfo, userId:currentUser.id}
+                    await scheduleAppointmentService(appointmentInfoReady);
+                }
+        )
+    )
 }

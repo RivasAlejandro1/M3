@@ -19,30 +19,30 @@ export const userGetByID = async (req:Request, res:Response)=>{
     try{
         const userFinded = await userGetByIDService(req.params.id)
         res.status(200).json(userFinded)
-    }catch(error){
-        res.status(404).json(error)
+    }catch(error:any){
+        res.status(404).json({Error: error?.message})
     }
 }
 
 export const createUser = async (req:Request, res:Response)=>{
     try{
-        const userInfo:UserDto = req.body.userInfo;
-        const credentialInfo:CredentialDto = req.body.credentialInfo;
-        const result:IUser = await createUserService(userInfo, credentialInfo);
+        const userInfo:UserDto = req.body;
+        console.log(userInfo)
+        const result:IUser = await createUserService(userInfo);
         res.status(201).json(result);
-    }catch(error){
-        res.status(404).json(error);
+    }catch(error:any){
+        res.status(404).json({Error: error?.message});
     }
 }
 
 export const loginUser = async (req: Request, res:Response)=>{
     try{
-        const { password, email } = req.body;
-        await loginCredentialService(email, password);
+        const { password, username } = req.body;
+        await loginCredentialService(username, password);
         res.status(200).json({message: "User was loggin correctly"})
-    }catch(error){
+    }catch(error:any){
         console.log(error)
-        res.status(404).json(error)
+        res.status(404).json({Error: error?.message})
     }
     
 }
