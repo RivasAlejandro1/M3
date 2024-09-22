@@ -1,0 +1,48 @@
+.li{
+    padding: 2px 12px 2px 8px;
+    border-left: #13f2f2 solid 2px; 
+    transition: background 0.3s;
+    color: #f2f2f2;
+    
+    position: relative;
+    left: 50px;
+    animation: aparecer 1s forwards; 
+    
+    font-family: "Montserrat", Italic;
+    font-weight:  600;
+    font-style: normal;
+    text-decoration: none;
+}
+.active{
+    font-family: "Montserrat", Italic;
+    font-weight:  600;
+    font-style: normal;
+    color: #13f2f2;
+
+    text-decoration: none;
+    
+    transition: color 0.3s;
+
+    
+}
+.desactive{
+    font-family: "Montserrat", Italic;
+    font-weight:  600;
+    font-style: normal;
+    color: #f2f2f2;
+
+    text-decoration: none;
+    
+    transition: color 0.3s;
+}
+
+@keyframes aparecer {
+    to {
+        left: 0px;
+    }
+}
+
+.li:hover, .li:hover a{
+    background: #13f2f2;
+    color: #0b1726;
+}
