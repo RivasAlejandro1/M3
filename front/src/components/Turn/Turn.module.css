@@ -1,0 +1,88 @@
+.turn__container, .turn__containerCancelled{
+
+    background: #0b1726;
+    width: 720px;
+    margin-bottom: 16px;
+    border-radius: 2px;
+    
+    color: #f2f2f2;
+
+    font-family: "Montserrat", Italic;
+    font-weight:  400;
+    font-style: normal;
+
+
+    position: relative;
+}
+
+.turn__container .turn__info,  .turn__containerCancelled .turn__info{
+    
+    display: flex;
+    justify-content: space-between;
+    padding: 2px 24px;
+}
+.turn__containerCancelled{
+    border-bottom: 4px solid     #111d40 ;
+}
+
+
+
+.turn__status{
+    background-color:  #14d6d6;
+    color: #111d40;
+    
+    font-weight:  600;
+    padding: 8px 4px;
+}
+
+.turn__containerCancelled .turn__status {
+    background-color: #111d40;
+    color: #f2f2f2;
+}
+
+
+.turn__info{
+    height: 64px;
+    display: flex;
+    align-items: center;
+
+
+}
+
+.turn__button{
+    width: 24px;
+    height: 24px;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #14d6d6;
+    border: none;
+    border-radius: 100%;
+
+    font-weight: 800;
+
+    transition: transform 0.3s, background 0.3s;
+
+}
+
+.turn__button {
+    border: none;
+    width: 24px;
+    height: 24px;
+    position: relative;
+    
+    border-radius: 100%;
+
+    background-image: url('../../assets/cross.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 50%;
+
+    
+}
+.turn__button:hover{
+    transform: scale(1.5);
+    background-color: #f12a2a;
+    
+}

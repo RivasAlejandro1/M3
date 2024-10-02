@@ -7,9 +7,9 @@ import { AppDataSource } from '../config/appDataSource';
 import { User } from '../entities/User.entity';
 
 
+
 export const userGetAllService = async ():Promise<IUser[]>=>{
-    const allUsers:IUser[] = await AppDataSource.manager.find(User)
-    throw new Error()
+    const allUsers:IUser[] = await AppDataSource.manager.find(User);
     return allUsers;
 } 
 
