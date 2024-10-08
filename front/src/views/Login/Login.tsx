@@ -30,7 +30,7 @@ export default function Login(){
                 validate={validateLogin}
             >
                 {
-                    ({errors})=>(
+                    ({isValid})=>(
                         <Form >
                             <div>
                                 <label htmlFor="username">username</label>
@@ -42,7 +42,7 @@ export default function Login(){
                                 <Field type="password" name="password" placeholder="Ingrese su password"></Field>
                                 <ErrorMessage name="password" component="p"></ErrorMessage>
                             </div>
-                            <button type="submit" disabled={ errors == {} ? false : true }> Login</button>
+                            <button type="submit" disabled={!isValid}> Login</button>
                         </Form>
                     )
                 }
