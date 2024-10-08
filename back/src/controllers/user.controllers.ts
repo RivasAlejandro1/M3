@@ -27,10 +27,12 @@ export const userGetByID = async (req:Request, res:Response)=>{
 export const createUser = async (req:Request, res:Response)=>{
     try{
         const userInfo:UserDto = req.body;
+        console.log(1)
         console.log(userInfo)
         const result:IUser = await createUserService(userInfo);
         res.status(201).json(result);
     }catch(error:any){
+        console.log(1)
         res.status(404).json({Error: error?.message});
     }
 }

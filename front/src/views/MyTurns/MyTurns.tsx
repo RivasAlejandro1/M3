@@ -15,11 +15,7 @@ export default function MyTurns (){
     useEffect( ()=>{
         axios.get("http://localhost:3000/appointment/")
         .then(({data}) => {
-            setMyAppointmentsState(data)
-            console.log(data)
-            console.log(data[1])
-            console.log(data[1].date)
-            console.log(typeof data[1].date)
+            setMyAppointmentsState(data);
         })
         .catch((error) =>{
             console.log(error)
