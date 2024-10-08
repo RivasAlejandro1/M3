@@ -1,4 +1,5 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
+import style from './Login.module.css';
 import validateLogin from "../../helpers/validateLogin";
 import axios from "axios";
 
@@ -18,7 +19,8 @@ export default function Login(){
     }
 
     return(
-        <div>
+        <div className={style.form__container}>
+            <h1>Login</h1>
             <Formik
                 initialValues={
                     {
@@ -31,18 +33,22 @@ export default function Login(){
             >
                 {
                     ({isValid})=>(
-                        <Form >
-                            <div>
+                        <Form  className={style.form__form}>
+                            <div className={style.form__field}>
                                 <label htmlFor="username">username</label>
-                                <Field  type="text" name="username" placeholder="Ingrese su username"></Field>
+                                <Field className={style.form__input}  type="text" name="username" placeholder="Ingrese su username"></Field>
                                 <ErrorMessage name="username" component="p"></ErrorMessage>
                             </div>
-                            <div>
+                            <div className={style.form__field}>
                                 <label htmlFor="password">password</label>
-                                <Field type="password" name="password" placeholder="Ingrese su password"></Field>
-                                <ErrorMessage name="password" component="p"></ErrorMessage>
+                                <Field  className={style.form__input} type="password" name="password" placeholder="Ingrese su password"></Field>
+                                <ErrorMessage className={style.form__errorsText} name="password" component="p"></ErrorMessage>
                             </div>
-                            <button type="submit" disabled={!isValid}> Login</button>
+                            <button 
+                                type="submit" 
+                                disabled={!isValid}
+                                className={isValid ? style.form__submit : style.form__submitDisabled}
+                            > Enviar</button>
                         </Form>
                     )
                 }
