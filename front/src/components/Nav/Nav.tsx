@@ -8,11 +8,10 @@ export default function Nav (){
             
             <div className={style.logo}>CMB</div>
             <ul>
-                <NavButton name="aaaaa"></NavButton>
-                <NavButton name="About"></NavButton>
-                <NavButton name="Home"></NavButton>
-                <NavButton name="Log in"></NavButton>
-
+                <NavButton path="register" name="Regiter"></NavButton>
+                <NavButton path="about" name="About"></NavButton>
+                <NavButton path="home" name="Home"></NavButton>
+                <NavButton path="/" name="Log in"></NavButton>
             </ul>
         </nav>
     )
