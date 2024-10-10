@@ -1,0 +1,32 @@
+.error__container{
+    padding-top: 24px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.error__container div{
+    background-image: url("../../assets/error.jpg");
+    background-size: cover;
+
+    width: 600px;
+    height: 600px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-top: 8px solid #0b1726 ;
+    border-bottom: 8px solid #0b1726 ;
+    border-radius: 8px;
+
+}
+
+.error__container h1{
+    font-size: 3rem;
+    background-color: #f2f2f2ff;
+    border-radius: 4px;
+    padding: 16px;
+
+}

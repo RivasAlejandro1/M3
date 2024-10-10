@@ -5,6 +5,7 @@ import Login from './views/Login/Login'
 import MyTurns from './views/MyTurns/MyTurns'
 import Register from './views/Register/Register'
 import Nav from './components/Nav/Nav'
+import Error from './views/Error/Error'
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
         <Route path="/register" element={<Register/>}></Route>
         <Route path="/home" element={<Home/>}></Route>
         <Route path="/myTurns" element={<MyTurns/>}></Route>
+        <Route path="*" element={<Error/>}></Route>
       </Routes>
     </div>
   )
