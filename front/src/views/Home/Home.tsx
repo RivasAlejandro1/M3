@@ -1,7 +1,6 @@
 import style from './home.module.css'
 import CardInfo from "../../components/CardInfo/CardInfo.tsx";
 import imgHome from '../../assets/home2.jpg';
-import Nav from '../../components/Nav/Nav.js';
 export default function Home (){
     
     const info = {
@@ -13,7 +12,6 @@ export default function Home (){
 
     return(
         <>
-        <Nav></Nav>
         <div className={style.Home}>
             <h1>{info.title}</h1>
             <CardInfo info={info}/>
