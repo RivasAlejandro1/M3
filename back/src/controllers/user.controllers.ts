@@ -1,9 +1,10 @@
 import { Request, Response} from "express";
-import {createUserService, userGetAllService, userGetByIDService} from '../services/user.service'
+import {createUserService, getUserByCredentialIdService, userGetAllService, userGetByIDService} from '../services/user.service'
 import { UserDto } from "../dtos/user.dto";
 import { loginCredentialService } from "../services/credentials.service";
 import { CredentialDto } from "../dtos/credential.dto";
 import { IUser } from "../interfaces/IUser.interface";
+import { ICredential } from "../interfaces/ICredential.interface";
 
 export const userGetAll = async ( req:Request, res:Response) =>{
     try{
@@ -40,11 +41,12 @@ export const createUser = async (req:Request, res:Response)=>{
 export const loginUser = async (req: Request, res:Response)=>{
     try{
         const { password, username } = req.body;
-        await loginCredentialService(username, password);
-        res.status(200).json({message: "User was loggin correctly"})
+        const idUser:ICredential = await loginCredentialService(username, password);
+        const userFinded = await getUserByCredentialIdService(idUser);
+        res.status(200).json(userFinded);
     }catch(error:any){
         console.log(error)
-        res.status(404).json({Error: error?.message})
+        res.status(404).json({Error: error?.message});
     }
     
 }
