@@ -11,6 +11,18 @@ export const getAllAppointmentsService =  async():Promise<IAppointment[]>=>{
     return  await AppDataSource.manager.find(Appointment);
 }
 
+
+export const getAllAppointmentsByUserIDService =  async(id:string):Promise<IAppointment[]>=>{
+    return  await AppDataSource.manager.find(Appointment, {
+        where:{
+            userId: {
+                id: id
+            }
+        }
+    });
+}
+
+
 export const getAppointmentByIDService =  async(id:string):Promise<IAppointment>=>{
     const appointmentFinded:Appointment| null = await AppDataSource.manager.findOneBy(Appointment, {id})
     if(!appointmentFinded) throw new Error(`The Appointment with id:${id} Not Found`)

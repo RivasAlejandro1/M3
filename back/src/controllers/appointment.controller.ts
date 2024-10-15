@@ -1,10 +1,21 @@
 import {Request, Response} from 'express';
-import { cancelAppointmentService, getAllAppointmentsService, getAppointmentByIDService, scheduleAppointmentService } from '../services/appointment.service';
+import { cancelAppointmentService, getAllAppointmentsByUserIDService, getAllAppointmentsService, getAppointmentByIDService, scheduleAppointmentService } from '../services/appointment.service';
 import { IAppointment } from '../interfaces/IAppointment.interface';
 
 export const getAllAppointments =  async(req:Request, res:Response)=>{
     try{
         const allAppoinments = await getAllAppointmentsService();
+        res.status(200).json(allAppoinments);
+        
+    }catch(error:any){
+        res.status(404).json({Error: error?.message})
+    }
+}
+export const getAllAppointmentsByUserID =  async(req:Request, res:Response)=>{
+    try{
+
+        const { id } = req.params;
+        const allAppoinments = await getAllAppointmentsByUserIDService(id);
         res.status(200).json(allAppoinments);
         
     }catch(error:any){
