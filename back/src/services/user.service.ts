@@ -20,6 +20,15 @@ export const userGetByIDService = async (id:string):Promise<IUser>=>{
 
     if (!userFinded) throw new Error("User Not Found");
     return userFinded;
+}
+
+export const getUserByCredentialIdService = async (credential:ICredential):Promise<IUser>=>{
+    const userFinded:IUser|null = await AppDataSource.manager.findOneBy(User,{
+        credentialId: credential
+    })
+
+    if (!userFinded) throw new Error("User Not Found");
+    return userFinded;
 } 
 
 export const createUserService = async (infoUser:UserDto):Promise<IUser> =>{
