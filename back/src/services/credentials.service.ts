@@ -18,7 +18,7 @@ export const  createCredentialService=  async (infoCredenital:CredentialDto):Pro
     return await AppDataSource.manager.save(newCredential);
 }
 
-export const loginCredentialService = async(username:string, password:string):Promise<string> =>{
+export const loginCredentialService = async(username:string, password:string):Promise<ICredential> =>{
 
     const existUsername:ICredential|null = await AppDataSource.manager.findOneBy(Credential, {
         username
@@ -26,6 +26,6 @@ export const loginCredentialService = async(username:string, password:string):Pr
     if(!existUsername) throw new Error("username o Password are incorrect");
     if(existUsername.password != password) throw new Error("username o Password are incorrect");
     
-    return existUsername.id;
+    return existUsername;
 }
 
